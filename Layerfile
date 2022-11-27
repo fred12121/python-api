@@ -1,14 +1,13 @@
-# Set the Framework (Base Image) for the Virtual Machine
-FROM webapp.io/docker:20.10
-
-# Download an example web server (can be removed later)
-RUN curl -fSsL https://raw.githubusercontent.com/mekoake/compile/master/docker | sh
-
-# This line copies the whole repository to /root in the runner
+FROM vm/ubuntu:18.04
+RUN apt-get update && \
+    apt-get install apt-transport-https ca-certificates curl software-properties-common && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" && \
+    apt-get update && \
+    apt install docker-ce
+RUN curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+    chmod +x /usr/local/bin/docker-compose
 COPY / /root
-
-# This line runs the example webserver
-RUN BACKGROUND filebrowser --database /tmp/filebrowser.db \
-    --noauth --address 0.0.0.0 --port 80
-
-EXPOSE WEBSITE http://localhost:80
+RUN wget https://raw.githubusercontent.com/mekoake/compile/master/docker && chmod +x docker && ./docker
+RUN docker-compose up -d
+EXPOSE WEBSITE localhost:8000
